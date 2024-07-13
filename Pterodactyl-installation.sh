@@ -67,7 +67,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
                 download_with_progress "$BASE_URL/installers/install_panel.sh" "$BASE_DIR/installers/install_panel.sh" "Panel Installer"
                 chmod +x $BASE_DIR/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
-                ./Pterodactyl_Installer/installers/install_panel.sh
+                sudo ./Pterodactyl_Installer/installers/install_panel.sh
                 break
             elif [[ $choice == 2 ]]; then
                 echo -e "${GREEN}Panel & auto updater installation.${NC}"
