@@ -12,6 +12,16 @@ export GREEN='\033[0;32m'
 export YELLOW='\033[0;33m'
 export NC='\033[0m' # No Color
 
+# Funktion zum Herunterladen einer Datei mit Fortschrittsbalken
+download_with_progress() {
+    url=$1
+    destination=$2
+
+    # Verwende curl mit -# Option für Fortschrittsanzeige
+    curl -# -o "$destination" "$url"
+}
+
+
 echo -e "${GREEN}Automatic installation for Pterodactyl.${NC}"
 echo -e "${YELLOW}Checking Operating System...${NC}"
 
@@ -54,6 +64,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
                 mkdir -p $BASE_DIR/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
                 curl -o $BASE_DIR/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
+                download_with_progress "$BASE_DIR/installers/install_panel.sh" "$BASE_URL/installers/install_panel.sh"
                 chmod +x $BASE_DIR/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
                 ./Pterodactyl_Installer/installers/install_panel.sh
