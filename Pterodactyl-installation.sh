@@ -42,7 +42,6 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
     # Eingabeüberprüfung
     while true; do
         read -p "Choose [1-6]: " choice
-        case "$choice" in
         if [[ -z "$choice" ]]; then
             echo -e "${RED}Input is required${NC}"
         elif [[ ! "$choice" =~ ^[1-6]$ ]]; then
