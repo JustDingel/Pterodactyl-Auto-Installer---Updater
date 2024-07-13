@@ -52,7 +52,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
                 mkdir -p Pterodactyl_Installer/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
                 curl -o Pterodactyl_Installer/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
-                chmod +x installers/*.sh
+                chmod +x ./Pterodactyl_Installer/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
                 ./Pterodactyl_Installer/installers/install_panel.sh
                 break
