@@ -1,7 +1,9 @@
 #!/bin/bash
 
 VERSION="0.0.1"
-BASE_URL=""
+
+# Github-URL zu den Skripten
+BASE_URL="https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev"
 
 # Farben definieren
 RED='\033[0;31m'
@@ -40,7 +42,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
     # Eingabeüberprüfung
     while true; do
         read -p "Choose [1-6]: " choice
-
+        case "$choice" in
         if [[ -z "$choice" ]]; then
             echo -e "${RED}Input is required${NC}"
         elif [[ ! "$choice" =~ ^[1-6]$ ]]; then
@@ -48,6 +50,11 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
         else
             if [[ $choice == 1 ]]; then
                 echo -e "${GREEN}Panel installation.${NC}"
+                mkdir -p installers
+                echo -e "${YELLOW}Downloading installation script...${NC}"
+                curl -o installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
+                chmod +x installers/*.sh
+                echo -e "${GREEN}Download complete!${NC}"
             elif [[ $choice == 2 ]]; then
                 echo -e "${GREEN}Panel & auto updater installation.${NC}"
             elif [[ $choice == 3 ]]; then
