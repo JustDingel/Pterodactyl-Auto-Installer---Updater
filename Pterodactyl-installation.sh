@@ -49,9 +49,9 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
         else
             if [[ $choice == 1 ]]; then
                 echo -e "${GREEN}Panel installation.${NC}"
-                mkdir -p installers
+                mkdir -p Pterodactyl_Installer/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
-                curl -o installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
+                curl -o Pterodactyl_Installer/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
                 chmod +x installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
             elif [[ $choice == 2 ]]; then
