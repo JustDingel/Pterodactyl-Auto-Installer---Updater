@@ -16,11 +16,12 @@ export NC='\033[0m' # No Color
 download_with_progress() {
     url=$1
     destination=$2
+    description=$3
 
+    echo -e "${YELLOW}Downloading ${description}...${NC}"
     # Verwende curl mit -# Option für Fortschrittsanzeige
     curl -# -o "$destination" "$url"
 }
-
 
 echo -e "${GREEN}Automatic installation for Pterodactyl.${NC}"
 echo -e "${YELLOW}Checking Operating System...${NC}"
@@ -64,7 +65,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
                 mkdir -p $BASE_DIR/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
                 #curl -o $BASE_DIR/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
-                download_with_progress "$BASE_URL/installers/install_panel.sh" "$BASE_DIR/installers/install_panel.sh" 
+                download_with_progress "$BASE_URL/installers/install_panel.sh" "$BASE_DIR/installers/install_panel.sh" "Panel Installer"
                 chmod +x $BASE_DIR/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
                 ./Pterodactyl_Installer/installers/install_panel.sh
