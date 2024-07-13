@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Farben definieren
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[0;33m'
+export NC='\033[0m' # No Color
+
 
 echo -e "${YELLOW}Panel installation starting...${NC}"
 
@@ -37,4 +43,4 @@ echo -e "${YELLOW}Creating Pterodactyl folder...${NC}"
 sudo mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 
-echo -e "${YELLOW}Installation completed successfully!${NC}"
+echo -e "${GREEN}Installation completed successfully!${NC}"
