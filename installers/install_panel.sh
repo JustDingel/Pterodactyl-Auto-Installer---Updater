@@ -121,9 +121,9 @@ GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$DATABASE_IP' WITH
 EOF
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}MySQL Benutzer und Datenbank erfolgreich erstellt.${NC}"
+    echo -e "${GREEN}Database and User configuration completed successfully!${NC}"
 else
-    echo -e "${RED}Fehler bei der Erstellung des MySQL Benutzers und der Datenbank.${NC}"
+    echo -e "${RED}Something went wrong in the installation please read the error message. ${NC}"
 fi
 
 echo -e "${GREEN}Database and User installation completed successfully!${NC}"
