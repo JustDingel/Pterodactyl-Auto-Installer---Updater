@@ -4,6 +4,7 @@ VERSION="0.0.1"
 
 # Github-URL zu den Skripten
 BASE_URL="https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev"
+BASE_DIR="./Pterodactyl_Installer"
 
 # Farben definieren
 export RED='\033[0;31m'
@@ -49,11 +50,11 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
         else
             if [[ $choice == 1 ]]; then
                 echo -e "${GREEN}Panel installation.${NC}"
-                echo -e "${YELLOW}Creating directory ./Pterodactyl_Installer/installers${NC}"
-                mkdir -p ./Pterodactyl_Installer/installers
+                echo -e "${YELLOW}Creating directory Pterodactyl_Installer/installers${NC}"
+                mkdir -p $BASE_URL/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
                 curl -o Pterodactyl_Installer/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
-                chmod +x ./Pterodactyl_Installer/installers/*.sh
+                chmod +x $BASE_URL/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
                 ./Pterodactyl_Installer/installers/install_panel.sh
                 break
