@@ -112,8 +112,9 @@ tar -xzvf panel.tar.gz > /dev/null 2>&1
 echo -e "${YELLOW}Change permissions for Pterodactyl files...${NC}"
 chmod -R 755 storage/* bootstrap/cache/
 
+echo -e "${YELLOW}Setting up Database...${NC}"
 # MySQL-Befehle ausführen
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" <<EOF
+mysql -u $MYSQL_USER -p"$MYSQL_PASSWORD" <<EOF
 CREATE USER '$DATABASE_USER'@'$DATABASE_IP' IDENTIFIED BY '$DATABASE_PASSWORD';
 CREATE DATABASE $DATABASE_NAME;
 GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$PTERODACTYL_USER'@'$DATABASE_IP' WITH GRANT OPTION;
