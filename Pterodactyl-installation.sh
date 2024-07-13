@@ -1,5 +1,8 @@
 #!/bin/bash
 
+VERSION="0.0.1"
+BASE_URL=""
+
 # Farben definieren
 RED='\033[0;31m'
 GREEN='\033[0;32m'
