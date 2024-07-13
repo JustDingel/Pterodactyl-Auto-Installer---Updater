@@ -54,6 +54,7 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
                 curl -o Pterodactyl_Installer/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
                 chmod +x installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
+                Pterodactyl_Installer/installers/install_panel.sh
             elif [[ $choice == 2 ]]; then
                 echo -e "${GREEN}Panel & auto updater installation.${NC}"
             elif [[ $choice == 3 ]]; then
