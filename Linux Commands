@@ -1,0 +1,2 @@
+mkdir Pterodactyl_Installer; bash <(curl -s Pterodactyl_Installer/install.sh "https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev/Pterodactyl-installation.sh")
+sudo rm -rf Pterodactyl_Installer
