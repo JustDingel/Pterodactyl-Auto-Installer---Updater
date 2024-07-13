@@ -44,7 +44,7 @@ DEFAULT_PTERODACTYL_USER="pterodactyl"
 while true; do
     read -p "Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: " PTERODACTYL_USER
     DATABASE_USER=${PTERODACTYL_USER:-$DEFAULT_PTERODACTYL_USER}
-    check_input "$PTERODACTYL_USER" && break
+    check_input "$DATABASE_USER" && break
 done
 
 DEFAULT_PTERODACTYL_PASSWORD="pteropassword"
@@ -52,7 +52,7 @@ while true; do
     read -s -p "Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: " PTERODACTYL_PASSWORD
     DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
     echo
-    check_input "$PTERODACTYL_PASSWORD" && break
+    check_input "$DATABASE_PASSWORD" && break
 done
 
 # Datenbankname abfragen
