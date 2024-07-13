@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo -e "${YELLOW}Panel installation starting...${NC}"
 
 # Software properties und cURL installieren
@@ -12,6 +13,10 @@ sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php > /dev/null 2>&1
 
 # Redis Repository hinzufügen
 echo -e "${YELLOW}Adding Redis repository...${NC}"
+# Vorhandene Keyring-Datei löschen, wenn sie existiert
+if [ -f /usr/share/keyrings/redis-archive-keyring.gpg ]; then
+    sudo rm /usr/share/keyrings/redis-archive-keyring.gpg
+fi
 sudo curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg > /dev/null 2>&1
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list > /dev/null 2>&1
 
