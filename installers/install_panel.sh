@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "${YELLOW}Panel installation starting...${NC}"
+echo -e "${YELLOW}Panel installation starting...${NC}"
