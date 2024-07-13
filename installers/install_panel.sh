@@ -24,7 +24,7 @@ echo -e "${GREEN}Database installation${NC}"
 
 DEFAULT_MYSQL_USER="root"
 while true; do
-    read -s -p "Enter MySQL root user [Default: $DEFAULT_MYSQL_PASSWORD]: " MYSQL_USER
+    read -s -p "Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: " MYSQL_USER
     MYSQL_USER=${MYSQL_USER:-$DEFAULT_MYSQL_USER}
     echo
     check_input "$MYSQL_USER" && break
