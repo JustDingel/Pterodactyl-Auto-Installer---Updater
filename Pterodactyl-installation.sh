@@ -51,10 +51,10 @@ if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
             if [[ $choice == 1 ]]; then
                 echo -e "${GREEN}Panel installation.${NC}"
                 echo -e "${YELLOW}Creating directory Pterodactyl_Installer/installers${NC}"
-                mkdir -p $BASE_URL/installers
+                mkdir -p $BASE_DIR/installers
                 echo -e "${YELLOW}Downloading installation script...${NC}"
-                curl -o Pterodactyl_Installer/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
-                chmod +x $BASE_URL/installers/*.sh
+                curl -o $BASE_DIR/installers/install_panel.sh "$BASE_URL/installers/install_panel.sh"
+                chmod +x $BASE_DIR/installers/*.sh
                 echo -e "${GREEN}Download complete!${NC}"
                 ./Pterodactyl_Installer/installers/install_panel.sh
                 break
