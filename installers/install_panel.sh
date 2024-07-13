@@ -6,8 +6,70 @@ export GREEN='\033[0;32m'
 export YELLOW='\033[0;33m'
 export NC='\033[0m' # No Color
 
+MYSQL_USER="root"
+MYSQL_PASSWORD=" "
+
+# Funktion zur Überprüfung der Eingabe
+function check_input() {
+    if [ -z "$1" ]; then
+        echo -e "${RED}Eingabe darf nicht leer sein. Bitte erneut eingeben.${NC}"
+        return 1
+    fi
+    return 0
+}
 
 echo -e "${YELLOW}Panel installation starting...${NC}"
+
+echo -e "${GREEN}Database installation${NC}"
+
+DEFAULT_MYSQL_USER="root"
+while true; do
+    read -s -p "Enter MySQL root user [Default: $DEFAULT_MYSQL_PASSWORD]: " MYSQL_USER
+    MYSQL_USER=${MYSQL_USER:-$DEFAULT_MYSQL_USER}
+    echo
+    check_input "$MYSQL_USER" && break
+done
+
+# MySQL root Passwort abfragen
+DEFAULT_MYSQL_PASSWORD=" "
+while true; do
+    read -s -p "Enter MySQL root password [Default: $DEFAULT_MYSQL_PASSWORD]: " MYSQL_PASSWORD
+    MYSQL_PASSWORD=${MYSQL_PASSWORD:-$DEFAULT_MYSQL_PASSWORD}
+    echo
+    check_input "$MYSQL_PASSWORD" && break
+done
+
+# Pterodactyl Benutzer und Passwort abfragen
+DEFAULT_PTERODACTYL_USER="pterodactyl"
+while true; do
+    read -p "Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: " PTERODACTYL_USER
+    DATABASE_USER=${PTERODACTYL_USER:-$DEFAULT_PTERODACTYL_USER}
+    check_input "$PTERODACTYL_USER" && break
+done
+
+DEFAULT_PTERODACTYL_PASSWORD="pteropassword"
+while true; do
+    read -s -p "Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: " PTERODACTYL_PASSWORD
+    DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
+    echo
+    check_input "$PTERODACTYL_PASSWORD" && break
+done
+
+# Datenbankname abfragen
+DEFAULT_DATABASE_NAME="panel"
+while true; do
+    read -p "Enter database name for Pterodactyl [Default: $DEFAULT_DATABASE_NAME]: " DATABASE_NAME
+    DATABASE_NAME=${DATABASE_NAME:-$DEFAULT_DATABASE_NAME}
+    check_input "$DATABASE_NAME" && break
+done
+
+# Datenbank IP abfragen
+DEFAULT_DATABASE_IP="127.0.0.1"
+while true; do
+    read -p "Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: " DATABASE_IP
+    DATABASE_IP=${DATABASE_IP:-$DEFAULT_DATABASE_IP}
+    check_input "$DATABASE_IP" && break
+done
 
 # Software properties und cURL installieren
 echo -e "${YELLOW}Installing required packages...${NC}"
@@ -42,5 +104,28 @@ sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr
 echo -e "${YELLOW}Creating Pterodactyl folder...${NC}"
 sudo mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
+
+echo -e "${YELLOW}Downloading Pterodactyl files.${NC}"
+curl -# -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+echo -e "${YELLOW}Unpack Pterodactyl files..${NC}"
+tar -xzvf panel.tar.gz > /dev/null 2>&1
+echo -e "${YELLOW}Change permissions for Pterodactyl files...${NC}"
+chmod -R 755 storage/* bootstrap/cache/
+
+# MySQL-Befehle ausführen
+mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" <<EOF
+CREATE USER '$DATABASE_USER'@'$DATABASE_IP' IDENTIFIED BY '$DATABASE_PASSWORD';
+CREATE DATABASE $DATABASE_NAME;
+GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$PTERODACTYL_USER'@'$DATABASE_IP' WITH GRANT OPTION;
+EOF
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}MySQL Benutzer und Datenbank erfolgreich erstellt.${NC}"
+else
+    echo -e "${RED}Fehler bei der Erstellung des MySQL Benutzers und der Datenbank.${NC}"
+fi
+
+echo -e "${GREEN}Database and User installation completed successfully!${NC}"
+
 
 echo -e "${GREEN}Installation completed successfully!${NC}"
