@@ -6,10 +6,10 @@ VERSION="0.0.1"
 BASE_URL="https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev"
 
 # Farben definieren
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[0;33m'
+export NC='\033[0m' # No Color
 
 echo -e "${GREEN}Automatic installation for Pterodactyl.${NC}"
 echo -e "${YELLOW}Checking Operating System...${NC}"
