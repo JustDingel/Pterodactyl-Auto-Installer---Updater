@@ -126,7 +126,13 @@ else
     echo -e "${RED}Something went wrong in the installation please read the error message. ${NC}"
 fi
 
-echo -e "${GREEN}Database and User installation completed successfully!${NC}"
+echo -e "${YELLOW}Copy .env file...${NC}"
+cp .env.example .env
+echo -e "${YELLOW}install core dependencies...${NC}"
+composer install --no-dev --optimize-autoloader
+echo -e "${YELLOW}generate a new application encryption key...${NC}"
+php artisan key:generate --force
+
 
 
 echo -e "${GREEN}Installation completed successfully!${NC}"
