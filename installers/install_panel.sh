@@ -129,9 +129,9 @@ fi
 echo -e "${YELLOW}Copy .env file...${NC}"
 cp .env.example .env
 echo -e "${YELLOW}install core dependencies...${NC}"
-composer install --no-dev --optimize-autoloader -y > /dev/null 2>&1
+yes | composer install --no-dev --optimize-autoloader > /dev/null 2>&1
 echo -e "${YELLOW}generate a new application encryption key...${NC}"
-php artisan key:generate --force
+php artisan key:generate --force > /dev/null 2>&1
 
 
 
