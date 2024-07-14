@@ -35,7 +35,7 @@ echo -e "${GREEN}Database installation${NC}"
 
 DEFAULT_MYSQL_USER="root"
 while true; do
-    read -s -p "Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: " MYSQL_USER
+    read -s -p "${GREEN}Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: ${NC}" MYSQL_USER
     MYSQL_USER=${MYSQL_USER:-$DEFAULT_MYSQL_USER}
     echo
     check_input "$MYSQL_USER" && break
@@ -44,7 +44,7 @@ done
 # MySQL root Passwort abfragen
 DEFAULT_MYSQL_PASSWORD=" "
 while true; do
-    read -s -p "Enter MySQL root password [Default: $DEFAULT_MYSQL_PASSWORD]: " MYSQL_PASSWORD
+    read -s -p "${GREEN}Enter MySQL root password [Default: $DEFAULT_MYSQL_PASSWORD]: ${NC}" MYSQL_PASSWORD
     MYSQL_PASSWORD=${MYSQL_PASSWORD:-$DEFAULT_MYSQL_PASSWORD}
     echo
     check_input "$MYSQL_PASSWORD" && break
@@ -53,14 +53,14 @@ done
 # Pterodactyl Benutzer und Passwort abfragen
 DEFAULT_PTERODACTYL_USER="pterodactyl"
 while true; do
-    read -p "Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: " PTERODACTYL_USER
+    read -p "${GREEN}Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: ${NC}" PTERODACTYL_USER
     DATABASE_USER=${PTERODACTYL_USER:-$DEFAULT_PTERODACTYL_USER}
     check_input "$DATABASE_USER" && break
 done
 
 DEFAULT_PTERODACTYL_PASSWORD="pteropassword"
 while true; do
-    read -s -p "Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: " PTERODACTYL_PASSWORD
+    read -s -p "${GREEN}Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: ${NC}" PTERODACTYL_PASSWORD
     DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
     echo
     check_input "$DATABASE_PASSWORD" && break
@@ -69,7 +69,7 @@ done
 # Datenbankname abfragen
 DEFAULT_DATABASE_NAME="panel"
 while true; do
-    read -p "Enter database name for Pterodactyl [Default: $DEFAULT_DATABASE_NAME]: " DATABASE_NAME
+    read -p "${GREEN}Enter database name for Pterodactyl [Default: $DEFAULT_DATABASE_NAME]: ${NC}" DATABASE_NAME
     DATABASE_NAME=${DATABASE_NAME:-$DEFAULT_DATABASE_NAME}
     check_input "$DATABASE_NAME" && break
 done
@@ -77,14 +77,14 @@ done
 # Datenbank IP abfragen
 DEFAULT_DATABASE_IP="127.0.0.1"
 while true; do
-    read -p "Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: " DATABASE_IP
+    read -p "${GREEN}Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: ${NC}" DATABASE_IP
     DATABASE_IP=${DATABASE_IP:-$DEFAULT_DATABASE_IP}
     check_input "$DATABASE_IP" && break
 done
 
 DEFAULT_DATABASE_PORT="3306"
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " DATABASE_PORT
+    read -p "${GREEN}Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: ${NC}" DATABASE_PORT
     DATABASE_PORT=${DATABASE_PORT:-$DEFAULT_DATABASE_PORT}
     check_input "$DATABASE_PORT" && break
 done
@@ -92,7 +92,7 @@ done
 DEFAULT_AUTHOR_EMAIL="example@example.com"
 while true; do
     echo -e "${YELLOW}// Provide the email address that eggs exported by this Panel should be from. This should be a valid email address.${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " AUTHOR_EMAIL
+    read -p "${GREEN}Enter Email adress for Pterodactyl [Default: $DEFAULT_AUTHOR_EMAIL]: ${NC}" AUTHOR_EMAIL
     AUTHOR_EMAILT=${AUTHOR_EMAIL:-$DEFAULT_AUTHOR_EMAIL}
     check_input "$AUTHOR_EMAIL" && break
 done
@@ -101,7 +101,7 @@ DEFAULT_APPLICATION_URL="http://panel.example.com"
 while true; do
     echo -e "${YELLOW}// The application URL MUST begin with https:// or http:// depending on if you are using SSL or not. If you do not${NC}"
     echo -e "${YELLOW}// include the scheme your emails and other content will link to the wrong location.${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " APPLICATION_URL
+    read -p "Enter Application URL or IP adress [Default: $DEFAULT_DATABASE_PORT]: " APPLICATION_URL
     APPLICATION_URL=${APPLICATION_URL:-$DEFAULT_APPLICATION_URL}
     check_input "$APPLICATION_URL" && break
 done
@@ -109,7 +109,7 @@ done
 DEFAULT_APPLICATION_TIMEZONE="Europe/Berlin"
 while true; do
     echo -e "${YELLOW}// The timezone should match one of PHP's supported timezones. If you are unsure, please reference https://php.net/manual/en/timezones.php.${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_TIMEZONE]: " APPLICATION_TIMEZONE
+    read -p "Enter Zimezone [Default: $DEFAULT_APPLICATION_TIMEZONE]: " APPLICATION_TIMEZONE
     APPLICATION_TIMEZONE=${APPLICATION_TIMEZONE:-$DEFAULT_APPLICATION_TIMEZONE}
     check_input "$APPLICATION_TIMEZONE" && break
 done
