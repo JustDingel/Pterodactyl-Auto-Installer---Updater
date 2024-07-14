@@ -8,6 +8,17 @@ export NC='\033[0m' # No Color
 
 MYSQL_USER="root"
 MYSQL_PASSWORD=" "
+AUTHOR_EMAIL="example@example.com"
+APPLICATION_URL="http://panel.example.com"
+APPLICATION_TIMEZONE="Europe/Berlin"
+APPLICATION_CACHE="redis"
+APPLICATION_SESSION="redis"
+APPLICATION_QUEUE="redis"
+APPLICATION_UI="yes"
+APPLICATION_TELEMETRY="no"
+REDIS_IP="127.0.0.1"
+REDIS_PASSWORD=" "
+REDIS_PORT="6379"
 
 # Funktion zur Überprüfung der Eingabe
 function check_input() {
@@ -69,6 +80,108 @@ while true; do
     read -p "Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: " DATABASE_IP
     DATABASE_IP=${DATABASE_IP:-$DEFAULT_DATABASE_IP}
     check_input "$DATABASE_IP" && break
+done
+
+DEFAULT_DATABASE_PORT="3306"
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " DATABASE_PORT
+    DATABASE_PORT=${DATABASE_PORT:-$DEFAULT_DATABASE_PORT}
+    check_input "$DATABASE_PORT" && break
+done
+
+DEFAULT_AUTHOR_EMAIL="example@example.com"
+while true; do
+    echo -e "${YELLOW}// Provide the email address that eggs exported by this Panel should be from. This should be a valid email address.${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " AUTHOR_EMAIL
+    AUTHOR_EMAILT=${AUTHOR_EMAIL:-$DEFAULT_AUTHOR_EMAIL}
+    check_input "$AUTHOR_EMAIL" && break
+done
+
+DEFAULT_APPLICATION_URL="http://panel.example.com"
+while true; do
+    echo -e "${YELLOW}// The application URL MUST begin with https:// or http:// depending on if you are using SSL or not. If you do not${NC}"
+    echo -e "${YELLOW}// include the scheme your emails and other content will link to the wrong location.${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: " APPLICATION_URL
+    APPLICATION_URL=${APPLICATION_URL:-$DEFAULT_APPLICATION_URL}
+    check_input "$APPLICATION_URL" && break
+done
+
+DEFAULT_APPLICATION_TIMEZONE="Europe/Berlin"
+while true; do
+    echo -e "${YELLOW}// The timezone should match one of PHP's supported timezones. If you are unsure, please reference https://php.net/manual/en/timezones.php.${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_TIMEZONE]: " APPLICATION_TIMEZONE
+    APPLICATION_TIMEZONE=${APPLICATION_TIMEZONE:-$DEFAULT_APPLICATION_TIMEZONE}
+    check_input "$APPLICATION_TIMEZONE" && break
+done
+
+DEFAULT_APPLICATION_CACHE="redis"
+while true; do
+    echo -e "${YELLOW}Cache Driver${NC}"
+    echo -e "${GREEN}redis (recommended)${NC}"
+    echo -e "${GREEN}memcache${NC}"
+    echo -e "${GREEN}filesystem${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_CACHE]: " APPLICATION_CACHE
+    APPLICATION_CACHE=${APPLICATION_CACHE:-$DEFAULT_APPLICATION_CACHE}
+    check_input "$APPLICATION_CACHE" && break
+done
+
+DEFAULT_APPLICATION_SESSION="redis"
+while true; do
+    echo -e "${YELLOW}Session Driver${NC}"
+    echo -e "${GREEN}redis (recommended)${NC}"
+    echo -e "${GREEN}memcache${NC}"
+    echo -e "${GREEN}mysql database${NC}"
+    echo -e "${GREEN}filesystem${NC}"
+    echo -e "${GREEN}cookies${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_SESSION]: " APPLICATION_SESSION
+    APPLICATION_SESSION=${APPLICATION_SESSION:-$DEFAULT_APPLICATION_SESSION}
+    check_input "$APPLICATION_SESSION" && break
+done
+
+DEFAULT_APPLICATION_QUEUE="redis"
+while true; do
+    echo -e "${YELLOW}Cache Driver${NC}"
+    echo -e "${GREEN}redis (recommended)${NC}"
+    echo -e "${GREEN}mysql database${NC}"
+    echo -e "${GREEN}sync${NC}"
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_QUEUE]: " APPLICATION_QUEUE
+    APPLICATION_QUEUE=${APPLICATION_QUEUE:-$DEFAULT_APPLICATION_QUEUE}
+    check_input "$APPLICATION_QUEUE" && break
+done
+
+DEFAULT_APPLICATION_UI="yes"
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_UI]: " APPLICATION_UI
+    APPLICATION_UI=${APPLICATION_UI:-$DEFAULT_APPLICATION_UI}
+    check_input "$APPLICATION_UI" && break
+done
+
+DEFAULT_APPLICATION_TELEMETRY="yes"
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_TELEMETRY]: " APPLICATION_TELEMETRY
+    APPLICATION_TELEMETRY=${APPLICATION_TELEMETRY:-$DEFAULT_APPLICATION_TELEMETRY}
+    check_input "$APPLICATION_TELEMETRY" && break
+done
+
+DEFAULT_REDIS_IP="127.0.0.1"
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_IP]: " REDIS_IP
+    REDIS_IP=${REDIS_IP:-$DEFAULT_REDIS_IP}
+    check_input "$REDIS_IP" && break
+done
+
+DEFAULT_REDIS_PASSWORD=" "
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_PASSWORD]: " REDIS_PASSWORD
+    REDIS_PASSWORD=${REDIS_PASSWORD:-$DEFAULT_REDIS_PASSWORD}
+    check_input "$REDIS_PASSWORD" && break
+done
+
+DEFAULT_REDIS_PORT="6379"
+while true; do
+    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_PORT]: " REDIS_PORT
+    REDIS_PORT=${REDIS_PORT:-$DEFAULT_REDIS_PORT}
+    check_input "$REDIS_PORT" && break
 done
 
 # Software properties und cURL installieren
