@@ -6,8 +6,6 @@ export GREEN='\033[0;32m'
 export YELLOW='\033[0;33m'
 export NC='\033[0m' # No Color
 
-MYSQL_USER="root"
-MYSQL_PASSWORD=" "
 
 # Funktion zur Überprüfung der Eingabe
 function check_input() {
