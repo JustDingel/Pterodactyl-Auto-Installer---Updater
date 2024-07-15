@@ -52,7 +52,6 @@ while true; do
     echo -e "${YELLOW}// Change this out of security concerns!${NC}"
     read -s -p "${GREEN}Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: ${NC}" PTERODACTYL_PASSWORD
     DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
-    echo
     check_input "$DATABASE_PASSWORD" && break
 done
 
@@ -323,7 +322,7 @@ EOF
 
 php artisan p:user:make < .env.user
 
-rm .env.setup .env.database .env.user
+#rm .env.setup .env.database .env.user
 
 echo -e "${YELLOW}Setting permissions${NC}"
 sudo chown -R www-data:www-data /var/www/pterodactyl/*
