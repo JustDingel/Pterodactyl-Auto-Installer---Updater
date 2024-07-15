@@ -302,6 +302,7 @@ echo -e "${YELLOW}Configure database settings${NC}"
 cat <<EOF > .env.database
 $DATABASE_IP
 $DATABASE_PORT
+$DATABASE_NAME
 $DATABASE_USER
 $DATABASE_PASSWORD
 EOF
