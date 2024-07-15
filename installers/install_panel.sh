@@ -60,6 +60,7 @@ done
 
 DEFAULT_PTERODACTYL_PASSWORD="pteropassword"
 while true; do
+    echo -e "${YELLOW}// Change this out of security concerns!${NC}"
     read -s -p "${GREEN}Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: ${NC}" PTERODACTYL_PASSWORD
     DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
     echo
@@ -120,7 +121,7 @@ while true; do
     echo -e "${GREEN}redis (recommended)${NC}"
     echo -e "${GREEN}memcache${NC}"
     echo -e "${GREEN}filesystem${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_CACHE]: " APPLICATION_CACHE
+    read -p "Enter Application Cache method [Default: $DEFAULT_APPLICATION_CACHE]: " APPLICATION_CACHE
     APPLICATION_CACHE=${APPLICATION_CACHE:-$DEFAULT_APPLICATION_CACHE}
     check_input "$APPLICATION_CACHE" && break
 done
@@ -133,7 +134,7 @@ while true; do
     echo -e "${GREEN}mysql database${NC}"
     echo -e "${GREEN}filesystem${NC}"
     echo -e "${GREEN}cookies${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_SESSION]: " APPLICATION_SESSION
+    read -p "Enter how the sessions should be stored [Default: $DEFAULT_APPLICATION_SESSION]: " APPLICATION_SESSION
     APPLICATION_SESSION=${APPLICATION_SESSION:-$DEFAULT_APPLICATION_SESSION}
     check_input "$APPLICATION_SESSION" && break
 done
@@ -144,44 +145,91 @@ while true; do
     echo -e "${GREEN}redis (recommended)${NC}"
     echo -e "${GREEN}mysql database${NC}"
     echo -e "${GREEN}sync${NC}"
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_QUEUE]: " APPLICATION_QUEUE
+    read -p "${GREEN}Enter how the application queue should work [Default: $DEFAULT_APPLICATION_QUEUE]: " APPLICATION_QUEUE
     APPLICATION_QUEUE=${APPLICATION_QUEUE:-$DEFAULT_APPLICATION_QUEUE}
     check_input "$APPLICATION_QUEUE" && break
 done
 
 DEFAULT_APPLICATION_UI="yes"
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_UI]: " APPLICATION_UI
+    read -p "${GREEN}Enable UI based settings editor? [Default: $DEFAULT_APPLICATION_UI]: ${NC}" APPLICATION_UI
     APPLICATION_UI=${APPLICATION_UI:-$DEFAULT_APPLICATION_UI}
     check_input "$APPLICATION_UI" && break
 done
 
 DEFAULT_APPLICATION_TELEMETRY="yes"
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_APPLICATION_TELEMETRY]: " APPLICATION_TELEMETRY
+    read -p "${GREEN}Enable sending anonymous telemetry data? [Default: $DEFAULT_APPLICATION_TELEMETRY]: ${NC}" APPLICATION_TELEMETRY
     APPLICATION_TELEMETRY=${APPLICATION_TELEMETRY:-$DEFAULT_APPLICATION_TELEMETRY}
     check_input "$APPLICATION_TELEMETRY" && break
 done
 
 DEFAULT_REDIS_IP="127.0.0.1"
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_IP]: " REDIS_IP
+    echo -e "${YELLOW}! [NOTE] You've selected the Redis driver for one or more options, please provide valid connection information below.${NC}"
+    echo -e "${YELLOW}!        In most cases you can use the defaults provided unless you have modified your setup.${NC}"
+    read -p "${GREEN}Enter Redis IP [Default: $DEFAULT_REDIS_IP]: ${NC}" REDIS_IP
     REDIS_IP=${REDIS_IP:-$DEFAULT_REDIS_IP}
     check_input "$REDIS_IP" && break
 done
 
 DEFAULT_REDIS_PASSWORD=" "
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_PASSWORD]: " REDIS_PASSWORD
+    echo -e "${YELLOW}// By default a Redis server instance has no password as it is running locally and inaccessible to the outside world.${NC}"
+    echo -e "${YELLOW}// If this is the case, simply hit enter without entering a value.${NC}"
+    read -p "${GREEN}Enter Redis Password [Default: $DEFAULT_REDIS_PASSWORD]: ${NC}" REDIS_PASSWORD
     REDIS_PASSWORD=${REDIS_PASSWORD:-$DEFAULT_REDIS_PASSWORD}
     check_input "$REDIS_PASSWORD" && break
 done
 
 DEFAULT_REDIS_PORT="6379"
 while true; do
-    read -p "Enter database Port for Pterodactyl [Default: $DEFAULT_REDIS_PORT]: " REDIS_PORT
+    read -p "${GREEN}Enter Redis Port [Default: $DEFAULT_REDIS_PORT]: ${NC}" REDIS_PORT
     REDIS_PORT=${REDIS_PORT:-$DEFAULT_REDIS_PORT}
     check_input "$REDIS_PORT" && break
+done
+
+DEFAULT_USER_ADMIN="yes"
+while true; do
+    read -p "${GREEN}Is this user an administrator? (yes/no) [Default: $DEFAULT_USER_ADMIN]: ${NC}" USER_ADMIN
+    USER_ADMIN=${USER_ADMIN:-$DEFAULT_USER_ADMIN}
+    check_input "$USER_ADMIN" && break
+done
+
+DEFAULT_USER_EMAIL="example@example.com"
+while true; do
+    read -p "${GREEN}Enter a valid email adress [Default: $DEFAULT_USER_EMAIL]: ${NC}" USER_EMAIL
+    USER_EMAIL=${USER_EMAIL:-$DEFAULT_USER_EMAIL}
+    check_input "$USER_EMAIL" && break
+done
+
+DEFAULT_USER_NAME="ExampleMan42"
+while true; do
+    read -p "${GREEN}Enter a username [Default: $DEFAULT_USER_NAME]: ${NC}" USER_NAME
+    USER_NAME=${USER_NAME:-$DEFAULT_USER_NAME}
+    check_input "$USER_NAME" && break
+done
+
+DEFAULT_USER_FIRST="Max"
+while true; do
+    read -p "${GREEN}Enter your First Name [Default: $DEFAULT_USER_FIRST]: ${NC}" USER_FIRST
+    USER_FIRST=${USER_FIRST:-$DEFAULT_USER_FIRST}
+    check_input "$USER_FIRST" && break
+done
+
+DEFAULT_USER_LAST="Mustermann"
+while true; do
+    read -p "${GREEN}Enter your Last Name [Default: $DEFAULT_USER_LAST]: ${NC}" USER_LAST
+    USER_LAST=${USER_LAST:-$DEFAULT_USER_LAST}
+    check_input "$USER_LAST" && break
+done
+
+DEFAULT_USER_PASSWORD=""
+while true; do
+    echo -e "${YELLOW}Passwords must be at least 8 characters in length and contain at least one capital letter and number.${NC}"
+    read -p "${GREEN}Enter Password [Default: $DEFAULT_USER_PASSWORD]: ${NC}" USER_PASSWORD
+    USER_PASSWORD=${USER_PASSWORD:-$DEFAULT_USER_PASSWORD}
+    check_input "$USER_PASSWORD" && break
 done
 
 # Software properties und cURL installieren
@@ -244,8 +292,84 @@ cp .env.example .env
 echo -e "${YELLOW}install core dependencies...${NC}"
 yes | composer install --no-dev --optimize-autoloader > /dev/null 2>&1
 echo -e "${YELLOW}generate a new application encryption key...${NC}"
-php artisan key:generate --force > /dev/null 2>&1
+sudo php artisan key:generate --force > /dev/null 2>&1
 
+echo -e "${YELLOW}Configure environment settings${NC}"
+cat <<EOF > .env.setup
+$AUTHOR_EMAIL
+$APPLICATION_URL
+$APPLICATION_CACHE
+$APPLICATION_TIMEZONE
+$APPLICATION_SESSION
+$APPLICATION_QUEUE
+$APPLICATION_UI
+$APPLICATION_TELEMETRY
+$REDIS_IP
+$REDIS_PASSWORD
+$REDIS_PORT
+EOF
+sudo php artisan p:environment:setup < .env.setup
 
+echo -e "${YELLOW}Configure database settings${NC}"
+cat <<EOF > .env.database
+$DATABASE_IP
+$DATABASE_PORT
+$DATABASE_USER
+$DATABASE_PASSWORD
+EOF
+sudo php artisan p:environment:database < .env.database
 
+echo -e "${YELLOW}Migrating base data to database${NC}"
+sudo php artisan migrate --seed --force
+
+echo -e "${YELLOW}Creating User Admin account${NC}"
+cat <<EOF > .env.user
+$USER_ADMIN
+$USER_EMAIL
+$USER_NAME
+$USER_FIRST
+$USER_LAST
+$USER_PASSWORD
+EOF
+
+php artisan p:user:make < .env.user
+
+rm .env.setup .env.database .env.user
+
+echo -e "${YELLOW}Setting permissions${NC}"
+sudo chown -R www-data:www-data /var/www/pterodactyl/*
+
+CRON_JOB="* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1"
+(crontab -l 2>/dev/null | grep -Fq "$CRON_JOB") || (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+
+read -r -d '' PTEROQ_SERVICE_CONTENT << EOM
+# Pterodactyl Queue Worker File
+# ----------------------------------
+
+[Unit]
+Description=Pterodactyl Queue Worker
+After=redis-server.service
+
+[Service]
+# On some systems the user and group might be different.
+# Some systems use 'apache' or 'nginx' as the user and group.
+User=www-data
+Group=www-data
+Restart=always
+ExecStart=/usr/bin/php /var/www/pterodactyl/artisan queue:work --queue=high,standard,low --sleep=3 --tries=3
+StartLimitInterval=180
+StartLimitBurst=30
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+EOM
+
+echo -e "${YELLOW}Creating pteroq.service file...${NC}"
+echo "$PTEROQ_SERVICE_CONTENT" | sudo tee /etc/systemd/system/pteroq.service > /dev/null
+echo -e "${GREEN}pteroq.service file has been created successfully in /etc/systemd/system!${NC}"
+echo -e "${YELLOW}Enabling redis-server...${NC}"
+sudo systemctl enable --now redis-server
+echo -e "${YELLOW}Enabling pteroq.service...${NC}"
+sudo systemctl enable --now pteroq.service
 echo -e "${GREEN}Installation completed successfully!${NC}"
