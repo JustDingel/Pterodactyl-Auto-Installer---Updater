@@ -8,17 +8,6 @@ export NC='\033[0m' # No Color
 
 MYSQL_USER="root"
 MYSQL_PASSWORD=" "
-AUTHOR_EMAIL="example@example.com"
-APPLICATION_URL="http://panel.example.com"
-APPLICATION_TIMEZONE="Europe/Berlin"
-APPLICATION_CACHE="redis"
-APPLICATION_SESSION="redis"
-APPLICATION_QUEUE="redis"
-APPLICATION_UI="yes"
-APPLICATION_TELEMETRY="no"
-REDIS_IP="127.0.0.1"
-REDIS_PASSWORD=" "
-REDIS_PORT="6379"
 
 # Funktion zur Überprüfung der Eingabe
 function check_input() {
@@ -35,7 +24,8 @@ echo -e "${GREEN}Database installation${NC}"
 
 DEFAULT_MYSQL_USER="root"
 while true; do
-    read -s -p "${GREEN}Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: ${NC}" MYSQL_USER
+    echo -e "${GREEN}Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: ${NC}"
+    read -s -p " " MYSQL_USER
     MYSQL_USER=${MYSQL_USER:-$DEFAULT_MYSQL_USER}
     echo
     check_input "$MYSQL_USER" && break
