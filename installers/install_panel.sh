@@ -25,7 +25,7 @@ echo -e "${GREEN}Database installation${NC}"
 DEFAULT_MYSQL_USER="root"
 while true; do
     echo -e "${GREEN}Enter MySQL root user [Default: $DEFAULT_MYSQL_USER]: ${NC}"
-    read -s -p " " MYSQL_USER
+    read -s -p "" MYSQL_USER
     MYSQL_USER=${MYSQL_USER:-$DEFAULT_MYSQL_USER}
     echo
     check_input "$MYSQL_USER" && break
@@ -34,7 +34,8 @@ done
 # MySQL root Passwort abfragen
 DEFAULT_MYSQL_PASSWORD=" "
 while true; do
-    read -s -p "${GREEN}Enter MySQL root password [Default: $DEFAULT_MYSQL_PASSWORD]: ${NC}" MYSQL_PASSWORD
+    echo -e "${GREEN}Enter MySQL root password [Default: $DEFAULT_MYSQL_PASSWORD]: ${NC}"
+    read -s -p "" MYSQL_PASSWORD
     MYSQL_PASSWORD=${MYSQL_PASSWORD:-$DEFAULT_MYSQL_PASSWORD}
     echo
     check_input "$MYSQL_PASSWORD" && break
