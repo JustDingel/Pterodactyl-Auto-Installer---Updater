@@ -450,6 +450,8 @@ EOM
     # Hier die Schritte für HTTP ohne SSL einfügen
 elif [[ $APPLICATION_URL == https://* ]]; then
     domain_without_protocol=$(echo $APPLICATION_URL | sed -e 's#^http://##' -e 's#^https://##')
+    sudo apt install -y python3-certbot-nginx
+    sudo certbot certonly --nginx -d $domain_without_protocol
     echo -e "${YELLOW}HTTPS detected. Proceeding with SSL...${NC}"
     sudo rm /etc/nginx/sites-enabled/default
     read -r -d '' PTEROQ_NGINX_SERVICE << EOM
