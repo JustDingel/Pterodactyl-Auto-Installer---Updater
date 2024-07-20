@@ -277,7 +277,7 @@ sudo mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 
 echo -e "${YELLOW}Downloading Pterodactyl files.${NC}"
-curl -# -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz > /dev/null 2>&1
 echo -e "${YELLOW}Unpack Pterodactyl files..${NC}"
 tar -xzvf panel.tar.gz > /dev/null 2>&1
 echo -e "${YELLOW}Change permissions for Pterodactyl files...${NC}"
@@ -331,7 +331,7 @@ EOF
 sudo php artisan p:environment:database < .env.database > /dev/null 2>&1
 
 echo -e "${YELLOW}Migrating base data to database${NC}"
-sudo php artisan migrate --seed --force
+sudo php artisan migrate --seed --force > /dev/null 2>&1
 
 echo -e "${YELLOW}Creating User Admin account${NC}"
 cat <<EOF > .env.user
@@ -380,9 +380,9 @@ echo -e "${YELLOW}Creating pteroq.service file...${NC}"
 echo "$PTEROQ_SERVICE_CONTENT" | sudo tee /etc/systemd/system/pteroq.service > /dev/null
 echo -e "${GREEN}pteroq.service file has been created successfully in /etc/systemd/system!${NC}"
 echo -e "${YELLOW}Enabling redis-server...${NC}"
-sudo systemctl enable --now redis-server
+sudo systemctl enable --now redis-server > /dev/null 2>&1
 echo -e "${YELLOW}Enabling pteroq.service...${NC}"
-sudo systemctl enable --now pteroq.service
+sudo systemctl enable --now pteroq.service > /dev/null 2>&1
 echo -e "${GREEN}Installation completed successfully!${NC}"
 echo -e "${YELLOW}Installing Webserver...${NC}"
 
