@@ -42,7 +42,8 @@ done
 # Pterodactyl Benutzer und Passwort abfragen
 DEFAULT_PTERODACTYL_USER="pterodactyl"
 while true; do
-    read -p "${GREEN}Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: ${NC}" PTERODACTYL_USER
+    echo -e "${GREEN}Enter username for Pterodactyl [Default: $DEFAULT_PTERODACTYL_USER]: ${NC}"
+    read -p " " PTERODACTYL_USER
     DATABASE_USER=${PTERODACTYL_USER:-$DEFAULT_PTERODACTYL_USER}
     check_input "$DATABASE_USER" && break
 done
@@ -50,7 +51,8 @@ done
 DEFAULT_PTERODACTYL_PASSWORD="pteropassword"
 while true; do
     echo -e "${YELLOW}// Change this out of security concerns!${NC}"
-    read -s -p "${GREEN}Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: ${NC}" PTERODACTYL_PASSWORD
+    echo -e "${GREEN}Enter password for Pterodactyl [Default: $DEFAULT_PTERODACTYL_PASSWORD]: ${NC}"
+    read -s -p " " PTERODACTYL_PASSWORD
     DATABASE_PASSWORD=${PTERODACTYL_PASSWORD:-$DEFAULT_PTERODACTYL_PASSWORD}
     check_input "$DATABASE_PASSWORD" && break
 done
@@ -58,7 +60,8 @@ done
 # Datenbankname abfragen
 DEFAULT_DATABASE_NAME="panel"
 while true; do
-    read -p "${GREEN}Enter database name for Pterodactyl [Default: $DEFAULT_DATABASE_NAME]: ${NC}" DATABASE_NAME
+    echo -e "${GREEN}Enter database name for Pterodactyl [Default: $DEFAULT_DATABASE_NAME]: ${NC}"
+    read -p " " DATABASE_NAME
     DATABASE_NAME=${DATABASE_NAME:-$DEFAULT_DATABASE_NAME}
     check_input "$DATABASE_NAME" && break
 done
@@ -66,14 +69,16 @@ done
 # Datenbank IP abfragen
 DEFAULT_DATABASE_IP="127.0.0.1"
 while true; do
-    read -p "${GREEN}Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: ${NC}" DATABASE_IP
+    echo -e "${GREEN}Enter database IP for Pterodactyl [Default: $DEFAULT_DATABASE_IP]: ${NC}"
+    read -p " " DATABASE_IP
     DATABASE_IP=${DATABASE_IP:-$DEFAULT_DATABASE_IP}
     check_input "$DATABASE_IP" && break
 done
 
 DEFAULT_DATABASE_PORT="3306"
 while true; do
-    read -p "${GREEN}Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: ${NC}" DATABASE_PORT
+    echo -e "${GREEN}Enter database Port for Pterodactyl [Default: $DEFAULT_DATABASE_PORT]: ${NC}"
+    read -p " " DATABASE_PORT
     DATABASE_PORT=${DATABASE_PORT:-$DEFAULT_DATABASE_PORT}
     check_input "$DATABASE_PORT" && break
 done
@@ -81,7 +86,8 @@ done
 DEFAULT_AUTHOR_EMAIL="example@example.com"
 while true; do
     echo -e "${YELLOW}// Provide the email address that eggs exported by this Panel should be from. This should be a valid email address.${NC}"
-    read -p "${GREEN}Enter Email adress for Pterodactyl [Default: $DEFAULT_AUTHOR_EMAIL]: ${NC}" AUTHOR_EMAIL
+    echo -e "${GREEN}Enter Email adress for Pterodactyl [Default: $DEFAULT_AUTHOR_EMAIL]: ${NC}"
+    read -p " " AUTHOR_EMAIL
     AUTHOR_EMAILT=${AUTHOR_EMAIL:-$DEFAULT_AUTHOR_EMAIL}
     check_input "$AUTHOR_EMAIL" && break
 done
@@ -90,7 +96,8 @@ DEFAULT_APPLICATION_URL="http://panel.example.com"
 while true; do
     echo -e "${YELLOW}// The application URL MUST begin with https:// or http:// depending on if you are using SSL or not. If you do not${NC}"
     echo -e "${YELLOW}// include the scheme your emails and other content will link to the wrong location.${NC}"
-    read -p "Enter Application URL or IP adress [Default: $DEFAULT_DATABASE_PORT]: " APPLICATION_URL
+    echo -e "${GREEN}Enter Application URL or IP adress [Default: $DEFAULT_APPLICATION_URL]: ${NC}"
+    read -p " " APPLICATION_URL
     APPLICATION_URL=${APPLICATION_URL:-$DEFAULT_APPLICATION_URL}
     check_input "$APPLICATION_URL" && break
 done
@@ -98,7 +105,8 @@ done
 DEFAULT_APPLICATION_TIMEZONE="Europe/Berlin"
 while true; do
     echo -e "${YELLOW}// The timezone should match one of PHP's supported timezones. If you are unsure, please reference https://php.net/manual/en/timezones.php.${NC}"
-    read -p "Enter Zimezone [Default: $DEFAULT_APPLICATION_TIMEZONE]: " APPLICATION_TIMEZONE
+    echo -e "${GREEN}Enter Zimezone [Default: $DEFAULT_APPLICATION_TIMEZONE]: ${NC}"
+    read -p " " APPLICATION_TIMEZONE
     APPLICATION_TIMEZONE=${APPLICATION_TIMEZONE:-$DEFAULT_APPLICATION_TIMEZONE}
     check_input "$APPLICATION_TIMEZONE" && break
 done
@@ -109,7 +117,8 @@ while true; do
     echo -e "${GREEN}redis (recommended)${NC}"
     echo -e "${GREEN}memcache${NC}"
     echo -e "${GREEN}filesystem${NC}"
-    read -p "Enter Application Cache method [Default: $DEFAULT_APPLICATION_CACHE]: " APPLICATION_CACHE
+    echo -e "${GREEN}Enter Application Cache method [Default: $DEFAULT_APPLICATION_CACHE]: ${NC}"
+    read -p " " APPLICATION_CACHE
     APPLICATION_CACHE=${APPLICATION_CACHE:-$DEFAULT_APPLICATION_CACHE}
     check_input "$APPLICATION_CACHE" && break
 done
@@ -122,7 +131,8 @@ while true; do
     echo -e "${GREEN}mysql database${NC}"
     echo -e "${GREEN}filesystem${NC}"
     echo -e "${GREEN}cookies${NC}"
-    read -p "Enter how the sessions should be stored [Default: $DEFAULT_APPLICATION_SESSION]: " APPLICATION_SESSION
+    echo -e "${GREEN}Enter how the sessions should be stored [Default: $DEFAULT_APPLICATION_SESSION]: ${NC}"
+    read -p " " APPLICATION_SESSION
     APPLICATION_SESSION=${APPLICATION_SESSION:-$DEFAULT_APPLICATION_SESSION}
     check_input "$APPLICATION_SESSION" && break
 done
@@ -133,21 +143,24 @@ while true; do
     echo -e "${GREEN}redis (recommended)${NC}"
     echo -e "${GREEN}mysql database${NC}"
     echo -e "${GREEN}sync${NC}"
-    read -p "${GREEN}Enter how the application queue should work [Default: $DEFAULT_APPLICATION_QUEUE]: " APPLICATION_QUEUE
+    echo -e "${GREEN}Enter how the application queue should work [Default: $DEFAULT_APPLICATION_QUEUE]: ${NC}"
+    read -p " " APPLICATION_QUEUE
     APPLICATION_QUEUE=${APPLICATION_QUEUE:-$DEFAULT_APPLICATION_QUEUE}
     check_input "$APPLICATION_QUEUE" && break
 done
 
 DEFAULT_APPLICATION_UI="yes"
 while true; do
-    read -p "${GREEN}Enable UI based settings editor? [Default: $DEFAULT_APPLICATION_UI]: ${NC}" APPLICATION_UI
+    echo -e "${GREEN}Enable UI based settings editor? [Default: $DEFAULT_APPLICATION_UI]: ${NC}"
+    read -p " " APPLICATION_UI
     APPLICATION_UI=${APPLICATION_UI:-$DEFAULT_APPLICATION_UI}
     check_input "$APPLICATION_UI" && break
 done
 
 DEFAULT_APPLICATION_TELEMETRY="yes"
 while true; do
-    read -p "${GREEN}Enable sending anonymous telemetry data? [Default: $DEFAULT_APPLICATION_TELEMETRY]: ${NC}" APPLICATION_TELEMETRY
+    echo -e "${GREEN}Enable sending anonymous telemetry data? (yes/no) [Default: $DEFAULT_APPLICATION_TELEMETRY]: ${NC}"
+    read -p " " APPLICATION_TELEMETRY
     APPLICATION_TELEMETRY=${APPLICATION_TELEMETRY:-$DEFAULT_APPLICATION_TELEMETRY}
     check_input "$APPLICATION_TELEMETRY" && break
 done
@@ -156,7 +169,8 @@ DEFAULT_REDIS_IP="127.0.0.1"
 while true; do
     echo -e "${YELLOW}! [NOTE] You've selected the Redis driver for one or more options, please provide valid connection information below.${NC}"
     echo -e "${YELLOW}!        In most cases you can use the defaults provided unless you have modified your setup.${NC}"
-    read -p "${GREEN}Enter Redis IP [Default: $DEFAULT_REDIS_IP]: ${NC}" REDIS_IP
+    echo -e "${GREEN}Enter Redis IP [Default: $DEFAULT_REDIS_IP]: ${NC}"
+    read -p " " REDIS_IP
     REDIS_IP=${REDIS_IP:-$DEFAULT_REDIS_IP}
     check_input "$REDIS_IP" && break
 done
@@ -165,49 +179,56 @@ DEFAULT_REDIS_PASSWORD=" "
 while true; do
     echo -e "${YELLOW}// By default a Redis server instance has no password as it is running locally and inaccessible to the outside world.${NC}"
     echo -e "${YELLOW}// If this is the case, simply hit enter without entering a value.${NC}"
-    read -p "${GREEN}Enter Redis Password [Default: $DEFAULT_REDIS_PASSWORD]: ${NC}" REDIS_PASSWORD
+    echo -e "${GREEN}Enter Redis Password [Default: $DEFAULT_REDIS_PASSWORD]: ${NC}"
+    read -p " " REDIS_PASSWORD
     REDIS_PASSWORD=${REDIS_PASSWORD:-$DEFAULT_REDIS_PASSWORD}
     check_input "$REDIS_PASSWORD" && break
 done
 
 DEFAULT_REDIS_PORT="6379"
 while true; do
-    read -p "${GREEN}Enter Redis Port [Default: $DEFAULT_REDIS_PORT]: ${NC}" REDIS_PORT
+    echo -e "${GREEN}Enter Redis Port [Default: $DEFAULT_REDIS_PORT]: ${NC}"
+    read -p " " REDIS_PORT
     REDIS_PORT=${REDIS_PORT:-$DEFAULT_REDIS_PORT}
     check_input "$REDIS_PORT" && break
 done
 
 DEFAULT_USER_ADMIN="yes"
 while true; do
-    read -p "${GREEN}Is this user an administrator? (yes/no) [Default: $DEFAULT_USER_ADMIN]: ${NC}" USER_ADMIN
+    echo -e "${GREEN}Is this user an administrator? (yes/no) [Default: $DEFAULT_USER_ADMIN]: ${NC}"
+    read -p " " USER_ADMIN
     USER_ADMIN=${USER_ADMIN:-$DEFAULT_USER_ADMIN}
     check_input "$USER_ADMIN" && break
 done
 
 DEFAULT_USER_EMAIL="example@example.com"
 while true; do
-    read -p "${GREEN}Enter a valid email adress [Default: $DEFAULT_USER_EMAIL]: ${NC}" USER_EMAIL
+    echo -e "${GREEN}Enter a valid email adress [Default: $DEFAULT_USER_EMAIL]: ${NC}"
+    read -p " " USER_EMAIL
     USER_EMAIL=${USER_EMAIL:-$DEFAULT_USER_EMAIL}
     check_input "$USER_EMAIL" && break
 done
 
 DEFAULT_USER_NAME="ExampleMan42"
 while true; do
-    read -p "${GREEN}Enter a username [Default: $DEFAULT_USER_NAME]: ${NC}" USER_NAME
+    echo -e "${GREEN}Enter a username [Default: $DEFAULT_USER_NAME]: ${NC}"
+    read -p " " USER_NAME
     USER_NAME=${USER_NAME:-$DEFAULT_USER_NAME}
     check_input "$USER_NAME" && break
 done
 
 DEFAULT_USER_FIRST="Max"
 while true; do
-    read -p "${GREEN}Enter your First Name [Default: $DEFAULT_USER_FIRST]: ${NC}" USER_FIRST
+    echo -e "${GREEN}Enter your First Name [Default: $DEFAULT_USER_FIRST]: ${NC}"
+    read -p " " USER_FIRST
     USER_FIRST=${USER_FIRST:-$DEFAULT_USER_FIRST}
     check_input "$USER_FIRST" && break
 done
 
 DEFAULT_USER_LAST="Mustermann"
 while true; do
-    read -p "${GREEN}Enter your Last Name [Default: $DEFAULT_USER_LAST]: ${NC}" USER_LAST
+    echo -e "${GREEN}Enter your Last Name [Default: $DEFAULT_USER_LAST]: ${NC}"
+    read -p " " USER_LAST
     USER_LAST=${USER_LAST:-$DEFAULT_USER_LAST}
     check_input "$USER_LAST" && break
 done
@@ -215,7 +236,8 @@ done
 DEFAULT_USER_PASSWORD=""
 while true; do
     echo -e "${YELLOW}Passwords must be at least 8 characters in length and contain at least one capital letter and number.${NC}"
-    read -p "${GREEN}Enter Password [Default: $DEFAULT_USER_PASSWORD]: ${NC}" USER_PASSWORD
+    echo -e "${GREEN}Enter Password [Default: $DEFAULT_USER_PASSWORD]: ${NC}"
+    read -p " " USER_PASSWORD
     USER_PASSWORD=${USER_PASSWORD:-$DEFAULT_USER_PASSWORD}
     check_input "$USER_PASSWORD" && break
 done
@@ -413,7 +435,7 @@ server {
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param PHP_VALUE "upload_max_filesize = 100M \n post_max_size=100M";
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME \$document_root$fastcgi_script_name;
         fastcgi_param HTTP_PROXY "";
         fastcgi_intercept_errors off;
         fastcgi_buffer_size 16k;
