@@ -29,8 +29,8 @@ echo -e "${YELLOW}Checking Operating System...${NC}"
 # Extrahieren der Betriebssystemversion
 osversion=$(grep '^PRETTY_NAME' /etc/os-release | cut -d '=' -f2 | tr -d '"')
 
-if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
-    echo -e "${GREEN}Ubuntu 22.04.3 LTS found. Installation script starting...${NC}"
+if [[ $osversion == *"Ubuntu 22.04.4 LTS"* ]]; then
+    echo -e "${GREEN}Ubuntu 22.04.4 LTS found. Installation script starting...${NC}"
     
     # ASCII-Art
     echo -e "${GREEN}  _____  _                     _            _         _   _____           _        _ _       _   _             ${NC}"
