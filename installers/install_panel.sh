@@ -318,7 +318,7 @@ $REDIS_IP
 $REDIS_PASSWORD
 $REDIS_PORT
 EOF
-sudo php artisan p:environment:setup < .env.setup
+sudo php artisan p:environment:setup < .env.setup > /dev/null 2>&1
 
 echo -e "${YELLOW}Configure database settings${NC}"
 cat <<EOF > .env.database
@@ -328,7 +328,7 @@ $DATABASE_NAME
 $DATABASE_USER
 $DATABASE_PASSWORD
 EOF
-sudo php artisan p:environment:database < .env.database
+sudo php artisan p:environment:database < .env.database > /dev/null 2>&1
 
 echo -e "${YELLOW}Migrating base data to database${NC}"
 sudo php artisan migrate --seed --force
@@ -343,9 +343,9 @@ $USER_LAST
 $USER_PASSWORD
 EOF
 
-php artisan p:user:make < .env.user
+php artisan p:user:make < .env.user > /dev/null 2>&1
 
-rm .env.setup .env.database .env.user
+rm .env.setup .env.database .env.user > /dev/null 2>&1
 
 echo -e "${YELLOW}Setting permissions${NC}"
 sudo chown -R www-data:www-data /var/www/pterodactyl/*
@@ -414,7 +414,7 @@ server {
     charset utf-8;
 
     location / {
-        try_files $uri $uri/ /index.php?$query_string;
+        try_files \$uri \$uri/ /index.php?\$query_string;
     }
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -435,7 +435,7 @@ server {
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param PHP_VALUE "upload_max_filesize = 100M \n post_max_size=100M";
-        fastcgi_param SCRIPT_FILENAME \$document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         fastcgi_param HTTP_PROXY "";
         fastcgi_intercept_errors off;
         fastcgi_buffer_size 16k;
