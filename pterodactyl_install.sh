@@ -1,29 +1,22 @@
 #!/bin/bash
 
-# Farben für die Ausgabe
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
 # Funktion zur Überprüfung der Root-Rechte
 check_root() {
     if [[ $EUID -ne 0 ]]; then
-        echo -e "${RED}Dieses Skript muss als Root ausgeführt werden.${NC}"
+        echo "Dieses Skript muss als Root ausgeführt werden."
         exit 1
     fi
 }
 
 # Funktion zur Installation von Abhängigkeiten
 install_dependencies() {
-    echo -e "${YELLOW}Installiere notwendige Abhängigkeiten...${NC}"
     apt update
-    apt install -y software-properties-common curl apt-transport-https ca-certificates gnupg
+    apt install -y dialog curl wget software-properties-common apt-transport-https ca-certificates gnupg
 }
 
 # Funktion zur Installation des Panels
 install_panel() {
-    echo -e "${YELLOW}Installiere Pterodactyl Panel...${NC}"
+    dialog --infobox "Installiere Pterodactyl Panel..." 10 50
     
     # Füge PHP-Repository hinzu
     LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
@@ -55,13 +48,12 @@ install_panel() {
     composer install --no-dev --optimize-autoloader
     php artisan key:generate --force
     
-    echo -e "${GREEN}Pterodactyl Panel wurde installiert.${NC}"
-    echo -e "${YELLOW}Bitte konfigurieren Sie die .env-Datei manuell und führen Sie dann 'php artisan p:environment:setup' und 'php artisan p:environment:database' aus.${NC}"
+    dialog --msgbox "Pterodactyl Panel wurde installiert. Bitte konfigurieren Sie die .env-Datei manuell und führen Sie dann 'php artisan p:environment:setup' und 'php artisan p:environment:database' aus." 10 60
 }
 
 # Funktion zur Installation der Wings
 install_wings() {
-    echo -e "${YELLOW}Installiere Pterodactyl Wings...${NC}"
+    dialog --infobox "Installiere Pterodactyl Wings..." 10 50
     
     # Installiere Docker
     curl -sSL https://get.docker.com/ | CHANNEL=stable bash
@@ -95,13 +87,12 @@ EOF
     # Aktiviere und starte Wings
     systemctl enable --now wings
     
-    echo -e "${GREEN}Pterodactyl Wings wurden installiert.${NC}"
-    echo -e "${YELLOW}Bitte konfigurieren Sie die config.yml-Datei in /etc/pterodactyl/ manuell.${NC}"
+    dialog --msgbox "Pterodactyl Wings wurden installiert. Bitte konfigurieren Sie die config.yml-Datei in /etc/pterodactyl/ manuell." 10 60
 }
 
 # Funktion zur Konfiguration der Firewall
 setup_firewall() {
-    echo -e "${YELLOW}Konfiguriere Firewall...${NC}"
+    dialog --infobox "Konfiguriere Firewall..." 10 50
     
     apt install -y ufw
     ufw allow ssh
@@ -109,86 +100,21 @@ setup_firewall() {
     ufw allow https
     ufw --force enable
     
-    echo -e "${GREEN}Firewall wurde konfiguriert.${NC}"
+    dialog --msgbox "Firewall wurde konfiguriert." 10 50
 }
 
 # Funktion zur Generierung eines SSL-Zertifikats
 generate_ssl() {
-    echo -e "${YELLOW}Generiere SSL-Zertifikat...${NC}"
-    
     apt install -y certbot python3-certbot-nginx
     
-    read -p "Geben Sie Ihre Domain ein: " domain
+    domain=$(dialog --inputbox "Geben Sie Ihre Domain ein:" 10 60 3>&1 1>&2 2>&3)
+    
+    dialog --infobox "Generiere SSL-Zertifikat für $domain..." 10 50
     certbot --nginx -d $domain
     
-    echo -e "${GREEN}SSL-Zertifikat wurde generiert.${NC}"
+    dialog --msgbox "SSL-Zertifikat wurde generiert." 10 50
 }
 
 # Funktion zur Konfiguration der Datenbank
 configure_database() {
-    echo -e "${YELLOW}Konfiguriere Datenbank...${NC}"
-    
-    read -s -p "Geben Sie ein Root-Passwort für MariaDB ein: " rootpass
-    echo
-    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$rootpass';"
-    
-    read -p "Geben Sie einen Namen für die Pterodactyl-Datenbank ein: " dbname
-    read -p "Geben Sie einen Benutzernamen für die Pterodactyl-Datenbank ein: " dbuser
-    read -s -p "Geben Sie ein Passwort für den Pterodactyl-Datenbankbenutzer ein: " dbpass
-    echo
-    
-    mysql -u root -p$rootpass -e "CREATE DATABASE $dbname;"
-    mysql -u root -p$rootpass -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' IDENTIFIED BY '$dbpass';"
-    mysql -u root -p$rootpass -e "FLUSH PRIVILEGES;"
-    
-    echo -e "${GREEN}Datenbank wurde konfiguriert.${NC}"
-}
-
-# Funktion zum Einrichten von Cronjobs
-setup_cronjobs() {
-    echo -e "${YELLOW}Richte Cronjobs ein...${NC}"
-    
-    (crontab -l 2>/dev/null; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | crontab -
-    
-    echo -e "${GREEN}Cronjobs wurden eingerichtet.${NC}"
-}
-
-# Hauptmenü
-main_menu() {
-    while true; do
-        echo -e "\n${YELLOW}=== Pterodactyl Installations-Menü ===${NC}"
-        echo "1) Installiere Pterodactyl Panel"
-        echo "2) Installiere Pterodactyl Wings"
-        echo "3) Konfiguriere Firewall"
-        echo "4) Generiere SSL-Zertifikat"
-        echo "5) Konfiguriere Datenbank"
-        echo "6) Richte Cronjobs ein"
-        echo "7) Führe alle Schritte aus"
-        echo "8) Beenden"
-        
-        read -p "Wählen Sie eine Option: " choice
-        case $choice in
-            1) install_panel ;;
-            2) install_wings ;;
-            3) setup_firewall ;;
-            4) generate_ssl ;;
-            5) configure_database ;;
-            6) setup_cronjobs ;;
-            7)
-                install_panel
-                install_wings
-                setup_firewall
-                generate_ssl
-                configure_database
-                setup_cronjobs
-                ;;
-            8) exit 0 ;;
-            *) echo -e "${RED}Ungültige Auswahl${NC}" ;;
-        esac
-    done
-}
-
-# Hauptprogramm
-check_root
-install_dependencies
-main_menu
+    rootpass=$(dialog --passwordbox "Geben Sie ein Root-Passwort für MariaDB ein:" 10 60 3>&
