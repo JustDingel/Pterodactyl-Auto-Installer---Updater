@@ -86,7 +86,7 @@ choose_installation() {
 check_os() {
     osversion=$(grep '^PRETTY_NAME' /etc/os-release | cut -d '=' -f2 | tr -d '"')
 
-    if [[ $osversion == *"Ubuntu 22.04.4 LTS"* ]]; then
+    if [[ $osversion == *"Ubuntu 22.04.3 LTS"* ]]; then
         show_message "Ubuntu 22.04.4 LTS gefunden. Installation startet..."
     else
         show_error "Falsches Betriebssystem. Nur Ubuntu 22.04.4 LTS wird unterstützt."
