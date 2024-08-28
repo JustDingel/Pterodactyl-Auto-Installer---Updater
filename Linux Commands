@@ -2,3 +2,6 @@ mkdir Pterodactyl_Installer; bash <(curl -s Pterodactyl_Installer/install.sh "ht
 sudo rm -rf Pterodactyl_Installer
 
 172.26.112.1
+
+
+curl -sSL https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev/pterodacty_bootstrap.sh | sudo bash

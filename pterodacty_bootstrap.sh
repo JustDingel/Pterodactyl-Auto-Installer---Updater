@@ -20,7 +20,7 @@ main() {
     install_dependencies
 
     echo "Lade Pterodactyl Installations-Skript herunter..."
-    curl -sSL https://raw.githubusercontent.com/IHR_BENUTZERNAME/IHR_REPOSITORY/main/pterodactyl_install.sh -o pterodactyl_install.sh
+    curl -sSL https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev/pterodactyl_install.sh -o ./pterodactyl_install.sh
     chmod +x pterodactyl_install.sh
 
     echo "Starte Installation..."
