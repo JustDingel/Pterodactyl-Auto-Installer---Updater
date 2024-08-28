@@ -10,8 +10,9 @@ check_root() {
 
 # Funktion zur Installation von Abhängigkeiten
 install_dependencies() {
+    echo "Installiere notwendige Abhängigkeiten..."
     apt update
-    apt install -y curl
+    apt install -y curl wget
 }
 
 # Hauptfunktion
@@ -20,11 +21,27 @@ main() {
     install_dependencies
 
     echo "Lade Pterodactyl Installations-Skript herunter..."
-    curl -sSL https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev/pterodactyl_install.sh -o ./pterodactyl_install.sh
+    wget https://raw.githubusercontent.com/JustDingel/Pterodactyl-Auto-Installer---Updater/dev/pterodactyl_install.sh -O pterodactyl_install.sh
+
+    if [ $? -ne 0 ]; then
+        echo "Fehler beim Herunterladen des Installationsskripts. Bitte überprüfen Sie Ihre Internetverbindung und die GitHub-URL."
+        exit 1
+    fi
+
     chmod +x pterodactyl_install.sh
+
+    if [ ! -x pterodactyl_install.sh ]; then
+        echo "Fehler beim Setzen der Ausführungsrechte für das Installationsskript."
+        exit 1
+    fi
 
     echo "Starte Installation..."
     ./pterodactyl_install.sh
+
+    if [ $? -ne 0 ]; then
+        echo "Es gab ein Problem bei der Ausführung des Installationsskripts."
+        exit 1
+    fi
 }
 
 main
